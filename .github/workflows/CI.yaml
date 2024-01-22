@@ -35,7 +35,9 @@ jobs:
           #     strip -x skia.darwin-x64.node
           #   downloadTarget: ''
           - host: windows-latest
-            build: yarn build --target x86_64-pc-windows-msvc
+            build: |-
+              choco install llvm -y
+              yarn build --target x86_64-pc-windows-msvc
             target: 'x86_64-pc-windows-msvc'
             downloadTarget: ''
           # - host: ubuntu-latest
@@ -124,8 +126,8 @@ jobs:
 
 
     env:
-      CC: clang-cl
-      CXX: clang-cl
+      CC: "C:\Program Files\LLVM\bin\clang-cl.exe"
+      CXX: "C:\Program Files\LLVM\bin\clang-cl.exe"
 
     steps:
       - uses: actions/checkout@v4
