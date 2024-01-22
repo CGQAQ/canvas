@@ -133,17 +133,24 @@ jobs:
       - name: Set env
         run: echo "${PWD}/depot_tools" >> $GITHUB_PATH
         shell: bash
-      - name: Install tools on Windows
-        if: matrix.settings.host == 'windows-latest'
-        run: |
-          choco install llvm ninja -y
-          pip install certifi
+
 
       - name: Setup node
         uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: 'yarn'
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+          architecture: 'x64'
+
+      - name: Install tools on Windows
+        if: matrix.settings.host == 'windows-latest'
+        run: |
+          choco install llvm ninja -y
+          pip install certifi
 
       - name: Set up QEMU
         if: ${{ matrix.settings.target == 'armv7-unknown-linux-gnueabihf' }}
