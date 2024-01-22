@@ -126,8 +126,8 @@ jobs:
 
 
     env:
-      CC: "C:\Program Files\LLVM\bin\clang-cl.exe"
-      CXX: "C:\Program Files\LLVM\bin\clang-cl.exe"
+      CC: "C:/Program Files/LLVM/bin/clang-cl.exe"
+      CXX: "C:/Program Files/LLVM/bin/clang-cl.exe"
 
     steps:
       - uses: actions/checkout@v4
