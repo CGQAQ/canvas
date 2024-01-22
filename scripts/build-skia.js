@@ -103,7 +103,7 @@ switch (PLATFORM_NAME) {
     const clangVersion = findClangWinVersion()
     if (clangVersion) {
       console.info(`Found clang version: ${clangVersion}`)
-      ExtraSkiaBuildFlag = `clang_win_version=\\"${clangVersion}"`
+      ExtraSkiaBuildFlag = `clang_win_version=\\"${clangVersion}\\"`
     }
     GN_ARGS.push(`skia_enable_fontmgr_win=false`)
     GN_ARGS.push(`skia_fontmgr_factory=\\":fontmgr_custom_directory_factory\\"`)
