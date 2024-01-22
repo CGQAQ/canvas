@@ -125,14 +125,19 @@ jobs:
     runs-on: ${{ matrix.settings.host }}
 
 
-    env:
-      CC: "C:/Program Files/LLVM/bin/clang-cl.exe"
-      CXX: "C:/Program Files/LLVM/bin/clang-cl.exe"
-
     steps:
       - uses: actions/checkout@v4
         with:
           submodules: true
+
+      - name: Set env
+        run: echo "${PWD}/depot_tools" >> $GITHUB_PATH
+        shell: bash
+      - name: Install tools on Windows
+        if: matrix.os == 'windows-latest'
+        run: |
+          choco install llvm ninja -y
+          pip install certifi
 
       - name: Setup node
         uses: actions/setup-node@v4
@@ -189,9 +194,15 @@ jobs:
         run: ${{ matrix.settings.setup }}
         if: ${{ matrix.settings.setup }}
 
-      - name: Download skia binary
-        run: node ./scripts/release-skia-binary.js --download --target=${{ matrix.settings.downloadTarget }}
-
+      - name: Compile skia
+        shell: powershell
+        if: matrix.os == 'windows-latest'
+        env:
+          PYTHONHTTPSVERIFY: 0
+        run: node ./scripts/build-skia.js
+#      - name: Download skia binary
+#        run: node ./scripts/release-skia-binary.js --download --target=${{ matrix.settings.downloadTarget }}
+#
       - name: 'Build'
         if: ${{ !matrix.settings.docker }}
         run: ${{ matrix.settings.build }}
