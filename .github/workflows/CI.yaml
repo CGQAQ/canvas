@@ -34,7 +34,7 @@ jobs:
               strip -x skia.darwin-x64.node
             downloadTarget: ''
           - host: windows-latest
-            build: >-
+            build: |-
               $Env:CC = clang-cl
               $Env:CXX = clang-cl
               yarn build --target x86_64-pc-windows-msvc
